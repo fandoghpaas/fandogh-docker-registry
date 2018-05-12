@@ -1,0 +1,23 @@
+version: "3"
+services:
+  registry:
+    image: registry
+    ports:
+      - 5000:5000
+
+  registry-dashboard:
+    image: konradkleine/docker-registry-frontend:v2
+    environment:
+       - ENV_DOCKER_REGISTRY_HOST=registry
+       - ENV_DOCKER_REGISTRY_PORT=5000
+    links:
+      - registry
+
+  nginx:
+    build: dockers/nginx
+    ports:
+      - 8181:80
+    links:
+      - registry-dashboard
+    volumes:
+      - ./dockers/nginx/conf.d:/etc/nginx/conf.d
