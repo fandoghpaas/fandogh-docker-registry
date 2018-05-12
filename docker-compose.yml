@@ -2,8 +2,13 @@ version: "3"
 services:
   registry:
     image: registry
+    environment:
+      - REGISTRY_STORAGE_S3_ACCESSKEY=KEY
+      - REGISTRY_STORAGE_S3_SECRETKEY=SECRETKEY
     ports:
       - 5000:5000
+    volumes:
+      - ./dockers/registry/config.yml:/etc/docker/registry/config.yml
 
   registry-dashboard:
     image: konradkleine/docker-registry-frontend:v2

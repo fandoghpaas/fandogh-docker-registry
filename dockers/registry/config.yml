@@ -1,0 +1,25 @@
+version: 0.1
+log:
+  level: debug
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: inmemory
+  s3:
+    region: digitalocean-ams3
+    regionendpoint: ams3.digitaloceanspaces.com
+    bucket: fandogh-docker-registry
+    accesskey: PASSED_AS_ENV_VARIABLE
+    secretkey: PASSED_AS_ENV_VARIABLE
+  delete:
+    enabled: true
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
